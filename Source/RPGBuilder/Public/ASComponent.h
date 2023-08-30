@@ -15,6 +15,7 @@ public:
 
 public:
 
-	TMap<float, TSubclassOf<UAbilityBase*>> AbilityList;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Abilities")
+	TMap<float, TSubclassOf<AAbilityBase> > AbilityList;
 };
 

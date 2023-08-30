@@ -30,8 +30,6 @@ ACharacterBase::ACharacterBase()
 
 	StatsComponent = CreateDefaultSubobject<UStatsComponent>(TEXT("Stats Component"));
 
-	AbilitySystemComponent = CreateDefaultSubobject<UASComponent>(TEXT("Ability System Component"));
-
 	MagicSystemComponent = CreateDefaultSubobject<UMagicSystemComponent>(TEXT("Magic System Component"));
 
 	bUseControllerRotationPitch = false;
@@ -607,14 +605,64 @@ void ACharacterBase::AddItemDebuff(float Value, EItemDebuffType Type)
 		}
 }
 
-void ACharacterBase::AddMagicBuff(float Value/*, enum type*/)
+void ACharacterBase::AddMagicBuff(float Value, EMagicBuffType Type)
 {
-
+	switch (Type)
+	{
+	case EMagicBuffType::EMBT_HealthBuff:
+		StatsComponent->AddMagicBuff(Value, Type);
+		break;
+	case EMagicBuffType::EMBT_MagicPointsBuff:
+		StatsComponent->AddMagicBuff(Value, Type);
+		break;
+	case EMagicBuffType::EMBT_StrengthBuff:
+		StatsComponent->AddMagicBuff(Value, Type);
+		break;
+	case EMagicBuffType::EMBT_DefenseBuff:
+		StatsComponent->AddMagicBuff(Value, Type);
+		break;
+	case EMagicBuffType::EMBT_AgilityBuff:
+		StatsComponent->AddMagicBuff(Value, Type);
+		break;
+	case EMagicBuffType::EMBT_IntelligenceBuff:
+		StatsComponent->AddMagicBuff(Value, Type);
+		break;
+	case EMagicBuffType::EMBT_StaminaBuff:
+		StatsComponent->AddMagicBuff(Value, Type);
+		break;
+	default:
+		break;
+	}
 }
 
-void ACharacterBase::AddMagicDebuff(float Value/*, enum type*/)
+void ACharacterBase::AddMagicDebuff(float Value, EMagicDebuffType Type)
 {
-
+	switch (Type)
+	{
+	case EMagicDebuffType::EMDT_HealthBuff:
+		StatsComponent->AddMagicDebuff(Value, Type);
+		break;
+	case EMagicDebuffType::EMDT_MagicPointsBuff:
+		StatsComponent->AddMagicDebuff(Value, Type);
+		break;
+	case EMagicDebuffType::EMDT_StrengthBuff:
+		StatsComponent->AddMagicDebuff(Value, Type);
+		break;
+	case EMagicDebuffType::EMDT_DefenseBuff:
+		StatsComponent->AddMagicDebuff(Value, Type);
+		break;
+	case EMagicDebuffType::EMDT_AgilityBuff:
+		StatsComponent->AddMagicDebuff(Value, Type);
+		break;
+	case EMagicDebuffType::EMDT_IntelligenceBuff:
+		StatsComponent->AddMagicDebuff(Value, Type);
+		break;
+	case EMagicDebuffType::EMDT_StaminaBuff:
+		StatsComponent->AddMagicDebuff(Value, Type);
+		break;
+	default:
+		break;
+	}
 }
 
 void ACharacterBase::ApplyDamage(float Damage)

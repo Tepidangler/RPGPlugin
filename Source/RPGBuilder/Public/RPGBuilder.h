@@ -12,6 +12,10 @@
 #include "ItemBase.h"
 #include "StatsComponent.h"
 #include "WeaponBase.h"
+#include "MagicBase.h"
+#include "AbilityBase.h"
+#include "ASComponent.h"
+#include "MagicSystemComponent.h"
 
 class FRPGBuilderModule : public IModuleInterface
 {

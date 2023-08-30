@@ -1,6 +1,7 @@
 #include "AbilityBase.h"
 
-UAbilityBase::UAbilityBase()
+
+AAbilityBase::AAbilityBase()
 {
 	Name = "Default Name";
 	Cost = 0.f;

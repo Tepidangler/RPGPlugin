@@ -2,6 +2,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "ItemBase.h"
+#include "MagicBase.h"
 #include "CharacterBase.generated.h"
 
 USTRUCT(BlueprintType)
@@ -143,8 +144,6 @@ public:
 		class USpringArmComponent* CameraBoom = nullptr;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 		UStatsComponent* StatsComponent = nullptr;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat")
-		UASComponent* AbilitySystemComponent = nullptr;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat")
 		UMagicSystemComponent* MagicSystemComponent = nullptr;
 	//UPROPERTY()
@@ -293,9 +292,9 @@ public:
 
 	void CheckForEnemy();
 	//Uses Multiplication rather than addition
-	void AddMagicBuff(float Value/*, enum type*/);
+	void AddMagicBuff(float Value, EMagicBuffType Type);
 
-	void AddMagicDebuff(float Value/*, enum type*/);
+	void AddMagicDebuff(float Value, EMagicDebuffType Type);
 	//Uses Addition rather than multiplication
 	void AddItemBuff(float Value, EItemBuffType Type);
 	void AddItemDebuff(float Value, EItemDebuffType Type);
@@ -305,7 +304,7 @@ public:
 	virtual float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 
 	UFUNCTION(BlueprintCallable, Category = "Character Animations")
-		void Die();
+	void Die();
 
 	bool IsDead();
 

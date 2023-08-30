@@ -6,6 +6,7 @@
 #include "AGSScalableFloat.h"
 #include "Components/ActorComponent.h"
 #include "ItemBase.h"
+#include "MagicBase.h"
 #include "StatsComponent.generated.h"
 
 
@@ -58,9 +59,9 @@ public:
 
 	void AddXP(float XP);
 	//Uses Multiplication rather than addition
-	void AddMagicBuff(float Value/*, enum type*/);
+	void AddMagicBuff(float Value, EMagicBuffType Type);
 
-	void AddMagicDebuff(float Value/*, enum type*/);
+	void AddMagicDebuff(float Value, EMagicDebuffType Type);
 
 	//Uses Addition rather than multiplication
 	void AddItemBuff(float Value, EItemBuffType Type);

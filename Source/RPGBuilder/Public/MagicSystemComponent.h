@@ -14,7 +14,8 @@ public:
 	UMagicSystemComponent();
 
 public:
-
-	TMap<float, TSubclassOf<UMagicBase*>> MagicList;
+	// Level, Spell
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Magic")
+	TMap<float, TSubclassOf<AMagicBase>> MagicList;
 };
 

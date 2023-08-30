@@ -1,15 +1,15 @@
 #pragma once
 #include "CoreMinimal.h"
-#include "UObject/NoExportTypes.h"
+#include "GameFramework/Actor.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "AbilityBase.generated.h"
 
 UCLASS()
-class RPGBUILDER_API UAbilityBase : public UObject
+class RPGBUILDER_API AAbilityBase : public AActor
 {
 	GENERATED_BODY()
 public:
-	UAbilityBase();
+	AAbilityBase();
 
 public:
 
