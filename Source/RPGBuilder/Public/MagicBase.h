@@ -33,6 +33,8 @@ enum class EMagicDebuffType : uint8
 };
 
 class ACharacterBase;
+class USphereComponent;
+class UProjectileMovementComponent;
 
 UCLASS()
 class RPGBUILDER_API AMagicBase : public AActor
@@ -42,29 +44,55 @@ class RPGBUILDER_API AMagicBase : public AActor
 public:
 	AMagicBase();
 
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
 	void AddBuff();
 
 	void AddDebuff();
 
+	void FireInDirection(const FVector& ShootDirection);
+
+	UFUNCTION()
+		void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
+
+	FORCEINLINE void SetCaster(AActor* Actor) { Caster = Actor; }
+	FORCEINLINE void SetInstigator(AController* Controller) { Instigator = Controller; }
+
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
 public:
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Collision")
+		USphereComponent* CollisionComponent;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Particles")
 		UParticleSystemComponent* ParticleSystemComponent;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Movement")
+		UProjectileMovementComponent* ProjectileMovementComponent;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AbilityInfo")
+		AActor* Caster = nullptr;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AbilityInfo")
+		AController* Instigator = nullptr;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AbilityInfo")
 		FName Name;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AbilityInfo")
 		float Cost;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AbilityInfo")
 		float CastTime;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AbilityInfo")
-		float Attack;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AbilityInfo", meta = (ClampMin= "1.0", ClampMax= "2.0"))
 		float BuffMultiplier;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AbilityInfo", meta = (ClampMin = "0.05", ClampMax = "1.0"))
 		float DebuffMultiplier;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AbilityInfo")
+		bool bIsRestoritive = false;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AbilityInfo | BuffType")
 		EMagicBuffType BuffType;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AbilityInfo | BuffType")
 		EMagicDebuffType DebuffType;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AbilityInfo | DamageType")
+		TSubclassOf<UDamageType> DamageTypeClass;
+
 
 };
 

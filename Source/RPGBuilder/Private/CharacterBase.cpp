@@ -1,6 +1,8 @@
 #include "CharacterBase.h"
 #include "InventoryComponent.h"
 #include "ItemBase.h"
+#include "WeaponBase.h"
+#include "EnemyBase.h"
 #include "Interactables.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -10,6 +12,7 @@
 #include "MagicSystemComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "DrawDebugHelpers.h"
 #include "Sound/SoundCue.h"
 
 ACharacterBase::ACharacterBase()
@@ -31,6 +34,7 @@ ACharacterBase::ACharacterBase()
 	StatsComponent = CreateDefaultSubobject<UStatsComponent>(TEXT("Stats Component"));
 
 	MagicSystemComponent = CreateDefaultSubobject<UMagicSystemComponent>(TEXT("Magic System Component"));
+	MagicSystemComponent->Controller = GetController();
 
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationRoll = false;
@@ -241,6 +245,7 @@ void ACharacterBase::Tick(float DeltaTime)
 	}
 	SetMovementStatus(MovementSpeed);
 	CalculateStealthRating(MovementStatus, PositionStatus);
+	CheckForEnemy();
 
 	if (bInterpToEnemy)
 	{
@@ -477,6 +482,75 @@ void ACharacterBase::CalculateStealthRating(EMovementStatus Status, EPositionSta
 	
 }
 
+float ACharacterBase::CalculatePhysicalDamage()
+{
+	float BaseDamage;
+	float Damage1;
+	float Damage2;
+	float AttackBonus;
+	float PhysicalBaseModifier = StatsComponent->Strength.GetCurrentValue() - StatsComponent->Strength.GetValueAtLevel(StatsComponent->Level);
+	check(CombatTarget)
+	//Physical Defense
+	float EnemyDefenseModifier = CombatTarget->StatsComponent->Defense.GetCurrentValue() - StatsComponent->Defense.GetValueAtLevel(CombatTarget->StatsComponent->Level);
+	if (EnemyDefenseModifier <= 0.f)
+	{
+		EnemyDefenseModifier = 1.f;
+	}
+
+	float EnemyDefense = (CombatTarget->StatsComponent->Defense.GetValueAtLevel(CombatTarget->StatsComponent->Level) * (100 + EnemyDefenseModifier)) / 100;
+	if (PhysicalBaseModifier <= 0.f)
+	{
+		PhysicalBaseModifier = 1.f;
+	}
+
+	//Base Damage = Att + [(Att + Lvl) / 32] * [(Att * Lvl) / 32]
+	//Damage = [Base Damage * (100 + Physical Base Mod) / 100
+
+	if (CharacterEquipment.LeftWeaponSlot)
+	{
+		AttackBonus = CharacterEquipment.LeftWeaponSlot->Attack + StatsComponent->Strength.GetValueAtLevel(StatsComponent->Level);
+		BaseDamage = AttackBonus + ((AttackBonus + StatsComponent->Level) / 32) * ((AttackBonus * StatsComponent->Level) / 32);
+		Damage1 = ((BaseDamage * (100 * PhysicalBaseModifier)) / 100);
+		Damage2 = (Damage1 * (512 - EnemyDefense)) / 512;
+		return Damage2;
+	}
+	else
+	{
+		AttackBonus = CharacterEquipment.RightWeaponSlot->Attack + StatsComponent->Strength.GetValueAtLevel(StatsComponent->Level);
+		BaseDamage = AttackBonus + ((AttackBonus + StatsComponent->Level) / 32) * ((AttackBonus * StatsComponent->Level) / 32);
+		Damage1 = ((BaseDamage * (100 * PhysicalBaseModifier)) / 100);
+		Damage2 = (Damage1 * (512 - EnemyDefense)) / 512;
+		return Damage2;
+	}
+}
+
+float ACharacterBase::CalculateMagicalDamage()
+{
+	float BaseDamage;
+	float Damage1;
+	float Damage2;
+	float MagicBaseModifier = StatsComponent->MagicAttack.GetCurrentValue() - StatsComponent->MagicAttack.GetValueAtLevel(StatsComponent->Level);
+	//Magic Defense
+	float EnemyDefenseModifier = CombatTarget->StatsComponent->MagicDefense.GetCurrentValue() - StatsComponent->MagicDefense.GetValueAtLevel(CombatTarget->StatsComponent->Level);
+	if (EnemyDefenseModifier <= 0.f)
+	{
+		EnemyDefenseModifier = 1.f;
+	}
+
+	float EnemyDefense = (CombatTarget->StatsComponent->MagicDefense.GetValueAtLevel(CombatTarget->StatsComponent->Level) * (100 + EnemyDefenseModifier)) / 100;
+	if (MagicBaseModifier <= 0.f)
+	{
+		MagicBaseModifier = 1.f;
+	}
+	//Base Damage = 6 * (MAt + Lvl)
+	//Damage = [Base Damage * (100 + Magical Base Mod) / 100]
+
+	BaseDamage = 6 * (StatsComponent->MagicAttack.GetValueAtLevel(StatsComponent->Level) + StatsComponent->Level);
+	Damage1 = (BaseDamage * (100 + MagicBaseModifier)) / 100;
+	Damage2 = (Damage1 * (512 - EnemyDefense)) / 512;
+	return Damage2;
+}
+
 void ACharacterBase::CheckForInteractables()
 {
 	FVector CamLocation;
@@ -502,11 +576,11 @@ void ACharacterBase::CheckForInteractables()
 		//Check if Valid
 		if (Interactable && !Interactable->bIsEquipped)
 		{
-			//PC->CurrentInteractable = Interactable;
-			return;
+//			CurrentInteractable = Interactable;
+	//		return;
 		}
 		
-		//PC->CurrentInteractable = nullptr;
+		//CurrentInteractable = nullptr;
 	}
 }
 
@@ -531,15 +605,17 @@ void ACharacterBase::CheckForEnemy()
 		TraceQueryParams.AddIgnoredActor(this);
 		//Check if something is hit
 		GetWorld()->LineTraceSingleByChannel(Hit, TraceStart, TraceEnd, ECollisionChannel::ECC_Visibility, TraceQueryParams);
-		//AEnemyBase* Enemy = Cast<AEnemyBase>(Hit.GetActor());
+		DrawDebugLine(GetWorld(), TraceStart, TraceEnd, FColor::Red, false, 5.f);
+		AEnemyBase* Enemy = Cast<AEnemyBase>(Hit.GetActor());
 		//Check if Valid
-		/**
+		
 		if (Enemy)
 		{
+			UE_LOG(LogTemp, Warning, TEXT("Hit Enemy"))
 			CombatTarget = Enemy;
 			return;
 		}
-		*/
+		
 	}
 
 }
@@ -732,6 +808,7 @@ float ACharacterBase::TakeDamage(float DamageAmount, FDamageEvent const& DamageE
 
 	return 0.f;
 }
+
 
 void ACharacterBase::Die()
 {

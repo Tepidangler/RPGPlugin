@@ -53,6 +53,8 @@ public:
 	/** Returns the scaled value at level 0 */
 	float GetValue(const FString* ContextString = nullptr) const;
 
+	float GetCurrentValue(const FString* ContextString = nullptr) const;
+
 	/** Used when using a scalable float as a bool */
 	bool AsBool(float Level = 0, const FString* ContextString = nullptr) const;
 

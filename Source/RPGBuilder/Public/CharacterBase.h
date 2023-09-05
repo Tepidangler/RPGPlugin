@@ -10,7 +10,7 @@ struct FCharacterEquipment
 {
 	GENERATED_BODY()
 
-	UPROPERTY(VisibleAnywhere, Category = "Character Equipment")
+	UPROPERTY(EditAnywhere, Category = "Character Equipment")
 		class AWeaponBase* LeftWeaponSlot = nullptr;
 	UPROPERTY(VisibleAnywhere, Category = "Character Equipment")
 		AWeaponBase* RightWeaponSlot = nullptr;
@@ -152,11 +152,10 @@ public:
 		class UInventoryComponent* Inventory;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Combat")
 		class UAnimMontage* CombatMontage = nullptr;
-
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound")
 		class USoundCue* SwingSwordEffortSound;
-//	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat")
-	//	class AEnemyBase* CombatTarget;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat")
+		class AEnemyBase* CombatTarget;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Movement")
 		float BaseTurnRate = 0.f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Movement")
@@ -192,8 +191,6 @@ public:
 		EPositionStatus PositionStatus;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Enums")
 		ELockOnStatus LockOnStatus = ELockOnStatus::ELS_NotLockedOn;
-//	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Struct | Stats")
-//		FCharacterStats CharacterStats;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Struct | Equipment")
 		FCharacterEquipment CharacterEquipment;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Movement")
@@ -216,6 +213,10 @@ public:
 		UParticleSystem* HitParticles;
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 		USoundCue* CancelSound = nullptr;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Mesh")
+		FName LeftHandSocketName;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Mesh")
+		FName RightHandSocketName;
 
 protected:
 	// Called when the game starts or when spawned
@@ -287,6 +288,11 @@ public:
 	void SetLockOnStatus(ELockOnStatus Status);
 
 	void CalculateStealthRating(EMovementStatus Status, EPositionStatus Position);
+
+	UFUNCTION(BlueprintCallable)
+	float CalculatePhysicalDamage();
+	UFUNCTION(BlueprintCallable)
+	float CalculateMagicalDamage();
 
 	void CheckForInteractables();
 

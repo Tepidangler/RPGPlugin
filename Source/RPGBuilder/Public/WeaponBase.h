@@ -21,16 +21,12 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "ItemInfo")
 		FString WeaponDescription;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "ItemInfo")
-		int32 Agility;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "ItemInfo")
-		int32 Strength;
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "ItemInfo")
-		int32 Damage;
+		float Attack;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "ItemInfo | Buff")
 		EBuffType BuffType;
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "ItemInfo ")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "ItemInfo")
 		AController* WeaponInstigator;
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "ItemInfo ")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "ItemInfo")
 		ACharacterBase* WeaponOwner;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "ItemInfo | Components")
 		USkeletalMeshComponent* SkeletalMesh;
@@ -55,11 +51,6 @@ public:
 
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
-
-	void AddBuff(ACharacterBase* MC);
-	void RemoveBuff(ACharacterBase* MC);
-
-	int32 CalculateDamage(ACharacterBase* MC, AEnemyBase* Enemy);
 
 	void AddToInventory(ACharacterBase* MC);
 

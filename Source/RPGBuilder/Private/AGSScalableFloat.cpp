@@ -93,6 +93,10 @@ float FAGSScalableFloat::GetValue(const FString* ContextString /*= nullptr*/) co
 	return GetValueAtLevel(0, ContextString);
 }
 
+float FAGSScalableFloat::GetCurrentValue(const FString* ContextSTring) const
+{
+	return Value;
+}
 
 bool FAGSScalableFloat::AsBool(float Level, const FString* ContextString) const
 {

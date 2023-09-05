@@ -27,9 +27,13 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Data")
 	FAGSScalableFloat Strength;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Data")
+	FAGSScalableFloat MagicAttack;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Data")
 	FAGSScalableFloat Agility;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Data")
 	FAGSScalableFloat Defense;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Data")
+	FAGSScalableFloat MagicDefense;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Data")
 	FAGSScalableFloat Intelligence;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Data")

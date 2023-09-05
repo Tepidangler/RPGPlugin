@@ -22,6 +22,16 @@ public:
 	TArray<AArmorBase*> ArmorArray;
 
 	ACharacterBase* MC;
+	
+	//Denotes how many instances of an individual item is allowed
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Capacity Limits")
+	int32 MaxItemCapacity;
+	//Denotes how many instances of a piece of armor is allowed
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Capacity Limits")
+	int32 MaxArmorCapacity;
+	//Denotes how many instnaces of an individual weapon is allowed
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Capacity Limits")
+	int32 MaxWeaponCapacity;
 
 public:
 
@@ -54,7 +64,7 @@ public:
 
 	int32 CountWeapons(AWeaponBase* Weapon);
 
-	int32 CountArmor(AWeaponBase* Armor);
+	int32 CountArmor(AArmorBase* Armor);
 
 	//UInventoryComponent* GetInventoryComponent() { return this; };
 	UFUNCTION(BlueprintCallable)

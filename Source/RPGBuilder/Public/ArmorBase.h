@@ -26,17 +26,10 @@ class RPGBUILDER_API AArmorBase : public AInteractables
 public:
 	// Sets default values for this actor's properties
 	AArmorBase();
-
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "ItemInfo")
 		FString ArmorDescription;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "ItemInfo")
-		int32 Defense;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "ItemInfo")
-		int32 Health;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "ItemInfo")
-		int32 MagicPoints;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "ItemInfo")
-		int32 Intelligence;
+		float Defense;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "ItemInfo")
 		USkeletalMeshComponent* SkeletalMesh;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "ItemInfo ")
@@ -53,10 +46,6 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
-
-	void AddBuff(ACharacterBase* MC);
-
-	void RemoveBuff(ACharacterBase* MC);
 
 	bool IsArmorTypeSet();
 
