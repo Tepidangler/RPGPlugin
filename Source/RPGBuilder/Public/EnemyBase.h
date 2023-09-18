@@ -23,7 +23,7 @@ public:
 
 
 		virtual float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
-
+	UFUNCTION(BlueprintCallable)
 		void Die(AActor* Causer);
 public:
 

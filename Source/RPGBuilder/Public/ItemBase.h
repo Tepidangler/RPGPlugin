@@ -95,13 +95,13 @@ public:
 	//Functions
 
 	UItemBase();
-
+	UFUNCTION(BlueprintCallable)
 	virtual bool AddBuff(ACharacterBase* MC);
-
+	UFUNCTION(BlueprintCallable)
 	virtual bool AddDebuff(ACharacterBase* MC);
-
+	UFUNCTION(BlueprintCallable)
 	virtual bool RemoveBuff(ACharacterBase* MC);
-
+	UFUNCTION(BlueprintCallable)
 	bool AddToInventory(ACharacterBase* MC);
 
 	FORCEINLINE void SetItemType(EItemType Type) { ItemType = Type; }

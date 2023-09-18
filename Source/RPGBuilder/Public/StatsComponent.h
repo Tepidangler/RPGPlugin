@@ -60,16 +60,18 @@ protected:
 public:	
 	// Called every frame
 	//virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
+	UFUNCTION(BlueprintCallable)
 	void AddXP(float XP);
 	//Uses Multiplication rather than addition
+	UFUNCTION(BlueprintCallable)
 	void AddMagicBuff(float Value, EMagicBuffType Type);
-
+	UFUNCTION(BlueprintCallable)
 	void AddMagicDebuff(float Value, EMagicDebuffType Type);
 
 	//Uses Addition rather than multiplication
+	UFUNCTION(BlueprintCallable)
 	void AddItemBuff(float Value, EItemBuffType Type);
-
+	UFUNCTION(BlueprintCallable)
 	void AddItemDebuff(float Value, EItemDebuffType Type);
 
 		

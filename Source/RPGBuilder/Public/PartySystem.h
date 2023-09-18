@@ -11,12 +11,33 @@ class RPGBUILDER_API UPartySystem : public UObject
 
 public:
 	UPartySystem();
+	UFUNCTION(BlueprintCallable)
+	ACharacterBase* GetPrimaryPartyMember();
+	UFUNCTION(BlueprintCallable)
+	void AttachPartyMember(ACharacterBase* Value);
+	UFUNCTION(BlueprintCallable)
+	void DetachPartyMember(ACharacterBase* Value);
+	UFUNCTION(BlueprintCallable)
+	void ReplacePartyMember(int Key, ACharacterBase* Value);
+	UFUNCTION(BlueprintCallable)
+	TMap<int, ACharacterBase*> GetMembers();
+	UFUNCTION(BlueprintCallable)
+	int FindMember(ACharacterBase* Value);
+	UFUNCTION(BlueprintCallable)
+	void SetPrimaryPartyMember(int Key);
+	UFUNCTION(BlueprintCallable)
+	void SetPartyLimit(int Limit);
+	UFUNCTION(BlueprintCallable)
+	int GetPartyLimit();
 
 public:
 
-	TArray<ACharacterBase*> Party;
-
+	UPROPERTY()
+	TMap<int, ACharacterBase*> Party;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Part")
 	int PartyLimit;
+	UPROPERTY()
+	int ControlledCharacterKey;
 
 };
 

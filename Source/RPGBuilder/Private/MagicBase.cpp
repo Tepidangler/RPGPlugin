@@ -71,14 +71,14 @@ void AMagicBase::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UP
 		ACharacterBase* MC = Cast<ACharacterBase>(OtherActor);
 		if (MC)
 		{
-			UGameplayStatics::ApplyDamage(MC, MC->MagicSystemComponent->CalculateMagicalDamage(Caster, MC, this), Instigator, this, DamageTypeClass);
+			UGameplayStatics::ApplyDamage(MC, MC->MagicSystemComponent->CalculateMagicalDamage(Caster, MC, this), MagicInstigator, this, DamageTypeClass);
 			return;
 		}
 
 		AEnemyBase* Enemy = Cast<AEnemyBase>(OtherActor);
 		if (Enemy)
 		{
-			UGameplayStatics::ApplyDamage(Enemy, Enemy->MagicComponent->CalculateMagicalDamage(Caster, Enemy, this), Instigator, this, DamageTypeClass);
+			UGameplayStatics::ApplyDamage(Enemy, Enemy->MagicComponent->CalculateMagicalDamage(Caster, Enemy, this), MagicInstigator, this, DamageTypeClass);
 			return;
 		}
 	}

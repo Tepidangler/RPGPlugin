@@ -228,7 +228,7 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
+	UFUNCTION(BlueprintCallable)
 	void SetInterpToEnemy(bool Interp);
 
 	void MoveForward(float Value);
@@ -275,34 +275,37 @@ public:
 	void SetStaminaStatus(EStaminaStatus Status);
 	//Getter/Setter WeaponWieldingStatus Enum
 	FORCEINLINE EWeaponWieldingStatus GetWieldingStatus() { return WieldingStatus; };
-
+	UFUNCTION(BlueprintCallable)
 	void SetWieldingStatus(EWeaponWieldingStatus Status);
 
 	//Getter/Setter PositionStatus Enum
 	FORCEINLINE EPositionStatus GetPositionStatus() { return PositionStatus; };
-
+	UFUNCTION(BlueprintCallable)
 	void SetPositionStatus(EPositionStatus Status);
 
 	FORCEINLINE ELockOnStatus GetLockOnStatus() { return LockOnStatus; };
-
+	UFUNCTION(BlueprintCallable)
 	void SetLockOnStatus(ELockOnStatus Status);
-
+	UFUNCTION(BlueprintCallable)
 	void CalculateStealthRating(EMovementStatus Status, EPositionStatus Position);
 
 	UFUNCTION(BlueprintCallable)
 	float CalculatePhysicalDamage();
 	UFUNCTION(BlueprintCallable)
 	float CalculateMagicalDamage();
-
+	UFUNCTION(BlueprintCallable)
 	void CheckForInteractables();
-
+	UFUNCTION(BlueprintCallable)
 	void CheckForEnemy();
 	//Uses Multiplication rather than addition
+	UFUNCTION(BlueprintCallable)
 	void AddMagicBuff(float Value, EMagicBuffType Type);
-
+	UFUNCTION(BlueprintCallable)
 	void AddMagicDebuff(float Value, EMagicDebuffType Type);
 	//Uses Addition rather than multiplication
+	UFUNCTION(BlueprintCallable)
 	void AddItemBuff(float Value, EItemBuffType Type);
+	UFUNCTION(BlueprintCallable)
 	void AddItemDebuff(float Value, EItemDebuffType Type);
 
 	void ApplyDamage(float Damage);
@@ -311,7 +314,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Character Animations")
 	void Die();
-
+	UFUNCTION(BlueprintCallable)
 	bool IsDead();
 
 

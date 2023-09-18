@@ -46,9 +46,9 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
-
+	UFUNCTION(BlueprintCallable)
 	bool IsArmorTypeSet();
-
+	UFUNCTION(BlueprintCallable)
 	void AddToInventory(ACharacterBase* MC);
 
 	FORCEINLINE void SetInstigator(AController* Inst) { ArmorInstigator = Inst; }

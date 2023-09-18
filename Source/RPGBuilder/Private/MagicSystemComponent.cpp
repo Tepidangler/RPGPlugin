@@ -84,4 +84,6 @@ float UMagicSystemComponent::CalculateMagicalDamage(AActor* DamageCauser, AActor
 		return Damage2;
 	}
 
+	return 0.f;
+
 }

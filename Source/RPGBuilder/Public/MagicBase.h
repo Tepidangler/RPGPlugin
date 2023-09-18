@@ -46,18 +46,18 @@ public:
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
+	UFUNCTION(BlueprintCallable)
 	void AddBuff();
-
+	UFUNCTION(BlueprintCallable)
 	void AddDebuff();
-
+	UFUNCTION(BlueprintCallable)
 	void FireInDirection(const FVector& ShootDirection);
 
 	UFUNCTION()
 		void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
 
 	FORCEINLINE void SetCaster(AActor* Actor) { Caster = Actor; }
-	FORCEINLINE void SetInstigator(AController* Controller) { Instigator = Controller; }
+	FORCEINLINE void SetInstigator(AController* Inst) { MagicInstigator = Inst; }
 
 protected:
 	// Called when the game starts or when spawned
@@ -72,8 +72,7 @@ public:
 		UProjectileMovementComponent* ProjectileMovementComponent;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AbilityInfo")
 		AActor* Caster = nullptr;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AbilityInfo")
-		AController* Instigator = nullptr;
+	AController* MagicInstigator = nullptr;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AbilityInfo")
 		FName Name;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AbilityInfo")

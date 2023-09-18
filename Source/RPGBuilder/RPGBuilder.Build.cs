@@ -25,8 +25,8 @@ public class RPGBuilder : ModuleRules
 		PublicDependencyModuleNames.AddRange( new string[]
 			{
 				"Core",
-                "DataRegistry"
-				// ... add other public dependencies that you statically link with here ...
+                "DataRegistry",
+				"AIModule"
 			}
 			);
 			
