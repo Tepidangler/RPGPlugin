@@ -5,7 +5,7 @@
 
 URPGGameInstance::URPGGameInstance()
 {
-	Party = NewObject<UPartySystem>();
+
 }
 
 void URPGGameInstance::Init()

@@ -3,7 +3,7 @@
 	"Version": 1,
 	"VersionName": "1.0",
 	"FriendlyName": "RPGBuilder",
-	"Description": "A Plugin to Build a base for RPG games",
+	"Description": "A Suite to build a base for RPG games",
 	"Category": "Other",
 	"CreatedBy": "Delano Wilcox",
 	"CreatedByURL": "",
@@ -20,6 +20,7 @@
 			"Type": "Runtime",
 			"LoadingPhase": "Default"
 		}
+
 	],
 
 	"Plugins":[

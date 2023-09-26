@@ -25,8 +25,20 @@ public class RPGBuilder : ModuleRules
 		PublicDependencyModuleNames.AddRange( new string[]
 			{
 				"Core",
-                "DataRegistry",
+                "Engine",
+                "CoreUObject",
+                "InputCore",
+                "LevelEditor",
+                "Slate",
+				"SlateCore",
+				"UMG",
+                "GameProjectGeneration",
+                "AssetTools",
+                "UnrealEd",
+				"EditorStyle",
+				"DataRegistry",
 				"AIModule"
+
 			}
 			);
 			
@@ -38,6 +50,15 @@ public class RPGBuilder : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
+                "AppFramework",
+                "GameProjectGeneration",
+                "AnimGraph",
+                "UnrealEd",
+                "KismetWidgets",
+                "DesktopWidgets",
+                "MainFrame",
+                "PropertyEditor",
+                "ComponentVisualizers",
 
 				// ... add private dependencies that you statically link with here ...	
 			}

@@ -27,5 +27,5 @@ protected:
 public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Party System")
-	UPartySystem* Party;
+	TSubclassOf<UPartySystem> Party;
 };

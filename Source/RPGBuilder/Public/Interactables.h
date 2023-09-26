@@ -44,9 +44,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "ItemInfo | Loot")
 		TSubclassOf<AArmorBase> Armor;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ItemInfo | Mesh")
-		UStaticMeshComponent* ClosedMesh;
+		UStaticMesh* ClosedMesh;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ItemInfo | Mesh")
-		UStaticMeshComponent* OpenedMesh;
+		UStaticMesh* OpenedMesh;
 
 
 

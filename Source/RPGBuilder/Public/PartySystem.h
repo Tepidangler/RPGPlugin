@@ -4,7 +4,7 @@
 #include "CharacterBase.h"
 #include "PartySystem.generated.h"
 
-UCLASS()
+UCLASS(Blueprintable)
 class RPGBUILDER_API UPartySystem : public UObject
 {
 	GENERATED_BODY()

@@ -47,7 +47,7 @@ enum class EItemType : uint8
 	EIT_MAX UMETA(DisplayName = "Default")
 };
 
-UCLASS()
+UCLASS(Blueprintable)
 class RPGBUILDER_API UItemBase : public UObject
 {
 	GENERATED_BODY()
