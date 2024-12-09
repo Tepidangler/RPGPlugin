@@ -1,4 +1,5 @@
 #include "PartySystem.h"
+#include "CharacterBase.h"
 
 UPartySystem::UPartySystem()
 {
@@ -17,6 +18,21 @@ void UPartySystem::SetPartyLimit(int Limit)
 int UPartySystem::GetPartyLimit()
 {
 	return PartyLimit;
+}
+
+void UPartySystem::SetPlayerControlledMember(int Key)
+{
+	for (int x = 0; x < Party.Num(); ++x)
+	{
+		if (x == Key)
+		{
+			Party[x]->SetControllerType(EControlledType::ECT_PlayerControlled);
+		}
+		else
+		{
+			Party[x]->SetControllerType(EControlledType::ECT_AIControlled);
+		}
+	}
 }
 
 void UPartySystem::AttachPartyMember(ACharacterBase* Value)

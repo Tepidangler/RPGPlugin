@@ -123,9 +123,28 @@ enum class ELockOnStatus : uint8
 	ELS_MAX UMETA(DisplayName = "DefaultMAX")
 };
 
+UENUM(BlueprintType)
+enum class EControlledType : uint8
+{
+	ECT_PlayerControlled UMETA(DisplayName = "Player Controlled"),
+	ECT_AIControlled UMETA(DisplayName = "AI Controlled"),
+
+	ECT_MAX UMETA(DisplayName = "DefaultMAX")
+};
+
+UENUM(BlueprintType)
+enum class ECombatStatus : uint8
+{
+	ECS_InCombat UMETA(DisplayName = "In Combat"),
+	ECS_NotInCombat UMETA(DisplayName = "Not In Combat"),
+
+	ECS_MAX UMETA(DisplayName = "DefaultMAX")
+};
+
 class UStatsComponent;
 class UASComponent;
 class UMagicSystemComponent;
+class AAIController;
 
 
 
@@ -156,6 +175,8 @@ public:
 		class USoundCue* SwingSwordEffortSound;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat")
 		class AEnemyBase* CombatTarget;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI")
+		AAIController* AIController;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Movement")
 		float BaseTurnRate = 0.f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Movement")
@@ -191,6 +212,10 @@ public:
 		EPositionStatus PositionStatus;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Enums")
 		ELockOnStatus LockOnStatus = ELockOnStatus::ELS_NotLockedOn;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Enums")
+		EControlledType ControllerType = EControlledType::ECT_PlayerControlled;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Enums")
+		ECombatStatus CombatStatus = ECombatStatus::ECS_NotInCombat;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Struct | Equipment")
 		FCharacterEquipment CharacterEquipment;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Movement")
@@ -286,6 +311,15 @@ public:
 	FORCEINLINE ELockOnStatus GetLockOnStatus() { return LockOnStatus; };
 	UFUNCTION(BlueprintCallable)
 	void SetLockOnStatus(ELockOnStatus Status);
+
+	UFUNCTION(BlueprintCallable)
+	void SetControllerType(EControlledType Type);
+	FORCEINLINE EControlledType GetControllerType() { return ControllerType; }
+
+	UFUNCTION(BlueprintCallable)
+	void SetCombatStatus(ECombatStatus Status);
+	FORCEINLINE ECombatStatus GetCombatStatus() { return CombatStatus; }
+
 	UFUNCTION(BlueprintCallable)
 	void CalculateStealthRating(EMovementStatus Status, EPositionStatus Position);
 
@@ -316,6 +350,11 @@ public:
 	void Die();
 	UFUNCTION(BlueprintCallable)
 	bool IsDead();
+
+
+	//AI Stuff
+
+	void FollowPrimaryCharacter();
 
 
 };

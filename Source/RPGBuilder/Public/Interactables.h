@@ -6,7 +6,8 @@
 class UItemBase;
 class AWeaponBase;
 class AArmorBase;
-class UStaticMeshComponent;
+class USkeletalMeshComponent;
+class UAnimSequence;
 class ACharacterBase;
 
 UENUM(BlueprintType)
@@ -44,11 +45,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "ItemInfo | Loot")
 		TSubclassOf<AArmorBase> Armor;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ItemInfo | Mesh")
-		UStaticMesh* ClosedMesh;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ItemInfo | Mesh")
-		UStaticMesh* OpenedMesh;
-
-
+		USkeletalMeshComponent* Mesh;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ItemInfo | Animation")
+		UAnimSequence* OpeningAnim;
 
 	bool bHasBeenOpened = false;
 

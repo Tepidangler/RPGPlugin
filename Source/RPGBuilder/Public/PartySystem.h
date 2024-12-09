@@ -29,15 +29,19 @@ public:
 	void SetPartyLimit(int Limit);
 	UFUNCTION(BlueprintCallable)
 	int GetPartyLimit();
+	UFUNCTION(BlueprintCallable)
+	void SetPlayerControlledMember(int Key);
 
 public:
 
 	UPROPERTY()
 	TMap<int, ACharacterBase*> Party;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Part")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Party")
 	int PartyLimit;
 	UPROPERTY()
 	int ControlledCharacterKey;
+	UPROPERTY()
+	int32 Money;
 
 };
 

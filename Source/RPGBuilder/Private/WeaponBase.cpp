@@ -14,7 +14,7 @@ AWeaponBase::AWeaponBase()
 	CollisionComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("CollisionComponent"));
 	RootComponent = CollisionComponent;
 	SkeletalMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("SkeletalMeshComponent"));
-	SkeletalMesh->AttachToComponent(RootComponent,FAttachmentTransformRules::KeepWorldTransform);
+	//SkeletalMesh->AttachToComponent(RootComponent,FAttachmentTransformRules::KeepWorldTransform);
 
 	Attack = 1.f;
 

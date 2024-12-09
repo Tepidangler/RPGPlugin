@@ -4,6 +4,8 @@
 #include "WeaponBase.h"
 #include "EnemyBase.h"
 #include "Interactables.h"
+#include "AIController.h"
+#include "RPGGameInstance.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -59,6 +61,7 @@ void ACharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
 
+	AIController = Cast<AAIController>(GetController());
 	//PC = Cast<AAlifPlayerController>(GetController());
 
 	//UAlifGameInstance* GameInstance = Cast<UAlifGameInstance>(GetGameInstance());
@@ -88,6 +91,11 @@ void ACharacterBase::BeginPlay()
 void ACharacterBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	if (CombatStatus != ECombatStatus::ECS_InCombat && ControllerType == EControlledType::ECT_AIControlled)
+	{
+		FollowPrimaryCharacter();
+	}
 
 	if (LockOnStatus == ELockOnStatus::ELS_NotLockedOn)
 	{
@@ -476,6 +484,16 @@ void ACharacterBase::SetLockOnStatus(ELockOnStatus Status)
 	LockOnStatus = Status;
 }
 
+void ACharacterBase::SetControllerType(EControlledType Type)
+{
+	ControllerType = Type;
+}
+
+void ACharacterBase::SetCombatStatus(ECombatStatus Status)
+{
+	CombatStatus = Status;
+}
+
 
 void ACharacterBase::CalculateStealthRating(EMovementStatus Status, EPositionStatus Position)
 {
@@ -818,4 +836,12 @@ void ACharacterBase::Die()
 bool ACharacterBase::IsDead()
 {
 	return GetMovementStatus() != EMovementStatus::EMS_Dead;
+}
+
+void ACharacterBase::FollowPrimaryCharacter()
+{
+	URPGGameInstance* GI = Cast<URPGGameInstance>(UGameplayStatics::GetGameInstance(this));
+	UPartySystem* PartySystem = Cast<UPartySystem>(GI->Party->GetDefaultObject());
+	check(PartySystem);
+	AIController->MoveToActor(PartySystem->GetPrimaryPartyMember(),15.f);
 }
